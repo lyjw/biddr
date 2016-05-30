@@ -1,0 +1,25 @@
+<div class="well">
+  <h2><%= @auction.title %></h2>
+  <p><%= @auction.details %></p>
+
+  <hr>
+
+  Current Price: <%= @auction.reserve_price %>
+
+</div>
+
+<%= simple_form_for [@auction, @bid] do |f| %>
+  <%= f.input :bid_price, label: false, input_html: { class: 'bid-form' } %>
+  <%= f.submit class: "btn btn-default", id: 'bid-submit' %>
+<% end %>
+
+<h4>Previous Bids</h4>
+
+<% if @ordered_bids.length > 0 %>
+  <% @ordered_bids.each do |bid| %>
+    <%= number_to_currency(bid.bid_price) %> on <%= formatted_date(bid.created_at) %>
+    <hr>
+  <% end %>
+<% else %>
+  There are currently no bids.
+<% end %>

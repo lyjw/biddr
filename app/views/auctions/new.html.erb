@@ -1,0 +1,17 @@
+<h2>Create New Auction</h2>
+
+<%= simple_form_for @auction, html: { class: 'form-horizontal' } do |f| %>
+  <%= f.input :title %>
+  <%= f.input :details %>
+
+  <label for="datepicker">End Date</label>
+  <input type="text" id="datepicker" name="auction[end_date]" class="form-control">
+  <%# f.input :end_date, label: "End Date" %>
+  <%= f.input :reserve_price, label: "Reserve Price" %>
+  <br/>
+  <%= f.submit "Save", class: "btn btn-default" %>
+<% end %>
+
+<script>
+    var picker = new Pikaday({ field: document.getElementById('datepicker') });
+</script>
