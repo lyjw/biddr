@@ -21,15 +21,15 @@ class Auction < ActiveRecord::Base
       transitions from: :draft, to: :published
     end
 
-    event :auction_ends_with_reserve_met do
+    event :reserve_met do
       transitions from: :published, to: :reserve_met
     end
 
-    event :auction_ends_with_winning_bid do
+    event :reserve_won do
       transitions from: :reserve_met, to: :reserve_won
     end
 
-    event :auction_ends_reserve_not_met do
+    event :reserve_not_met do
       transitions from: :published, to: :reserve_not_met
     end
 

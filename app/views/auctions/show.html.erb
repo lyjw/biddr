@@ -7,7 +7,7 @@
   Current Price: <%= number_to_currency(@auction.current_price) %>
 
   <hr>
-  Status: <%= @auction.published? ? "Ongoing" : "Draft" %>
+  Status: <%= @auction.aasm_state.titleize %>
 
   <% if can? :publish, @auction %>
     <% if @auction.draft? %>

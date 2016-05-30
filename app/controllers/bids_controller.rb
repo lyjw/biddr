@@ -10,12 +10,23 @@ class BidsController < ApplicationController
 
     if @bid.save
       @auction.current_price = @bid.bid_price
+
+      if reserve_met?
+        @auction.reserve_met
+      end
+
       @auction.save
       redirect_to auction_path(@auction), notice: "Bid created."
     else
       flash[:alert] = "Bid not created."
       render "auctions/show"
     end
+  end
+
+  private
+
+  def reserve_met?
+    @auction.current_price >= @auction.reserve_price
   end
 
 end
