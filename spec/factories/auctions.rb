@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :auction do
-    title           { "Vintage Wardrobe from the Renaissance Period" }
-    details        { "A beautiful piece that would look stunning in a house of any era"}
-    end_date      { Date.today + 1.week }
-    reserve_price { 5000 }
+    title           { Faker::Company.name }
+    details        { Faker::Hipster.paragraph }
+    end_date      { Faker::Date.between(Date.today, 3.weeks.from_now) }
+    reserve_price { 1000 }
   end
 end

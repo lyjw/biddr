@@ -3,6 +3,9 @@ require 'rails_helper'
 RSpec.describe AuctionsController, type: :controller do
 
     let(:auction) { FactoryGirl.create(:auction) }
+    let(:user) { FactoryGirl.create(:user) }
+
+    before { login(user) }
 
     describe "#new" do
       before { get :new }
