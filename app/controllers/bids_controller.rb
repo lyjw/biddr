@@ -8,18 +8,20 @@ class BidsController < ApplicationController
     @bid.auction = @auction
     @bid.user = current_user
 
-    if @bid.save
-      @auction.current_price = @bid.bid_price
+    respond_to do |format|
+      if @bid.save
+        @auction.current_price = @bid.bid_price
+        @auction.reserve_met if reserve_met?
+        @auction.save
 
-      if reserve_met?
-        @auction.reserve_met
+        format.html { redirect_to auction_path(@auction), notice: "Bid created." }
+        format.js { render :create_success }
+      else
+        flash[:alert] = "Bid not created."
+
+        format.html { render "auctions/show" }
+        format.js { render :create_failure }
       end
-
-      @auction.save
-      redirect_to auction_path(@auction), notice: "Bid created."
-    else
-      flash[:alert] = "Bid not created."
-      render "auctions/show"
     end
   end
 

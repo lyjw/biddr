@@ -1,0 +1,4 @@
+<div id="<%= dom_id(bid) %>" style="<%= style if defined?(style) %>">
+  <%= number_to_currency(bid.bid_price) %> on <%= formatted_date(bid.created_at) %>  by <%= link_to bid.bidder, user_path(bid.user) %>
+  <hr>
+</div>

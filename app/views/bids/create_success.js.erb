@@ -1,0 +1,5 @@
+$("#bids").prepend("<%= j render 'bids/bid', bid: @bid, style: 'display: none' %>");
+$("#current-price").html("<%= @auction.current_price %>");
+$("#bid-form").html("<%= j render 'bids/form', bid: Bid.new %>");
+
+$("#<%= dom_id(@bid) %>").fadeIn(1200);
