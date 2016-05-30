@@ -11,13 +11,14 @@ class AuctionsController < ApplicationController
 
   def create
     auction_params = params.require(:auction).permit(:title, :details, :end_date, :reserve_price)
-    @auction = Auction.create(auction_params)
-    @auction.user = current_user
 
-    if @auction.save
-      redirect_to auction_path(@auction), notice: "Auction created."
+    service = Auctions::CreateAuction.new(user: current_user, params: auction_params)
+
+    if service.call
+      redirect_to auction_path(service.auction), notice: "Auction created."
     else
       flash[:alert] = "Invalid parameters. Auction not created."
+      @auction = service.auction
       render :new
     end
   end
@@ -29,16 +30,20 @@ class AuctionsController < ApplicationController
   end
 
   def publish
-    @auction = Auction.find params["auction_id"]
-    @auction.publish
-    @auction.save
-    redirect_to auction_path(@auction)
+    auction = Auction.find params["auction_id"]
+    service = Auctions::PublishAuction.new(auction: auction)
+
+    if service.call
+      redirect_to auction_path(service.auction)
+    end
   end
 
   def unpublish
-    @auction = Auction.find params["auction_id"]
-    @auction.unpublish
-    @auction.save
-    redirect_to auction_path(@auction)
+    auction = Auction.find params["auction_id"]
+    service = Auctions::UnpublishAuction.new(auction: auction)
+
+    if service.call
+      redirect_to auction_path(service.auction)
+    end
   end
 end
