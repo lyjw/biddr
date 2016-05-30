@@ -8,15 +8,33 @@
 </head>
 <body>
 
-  <h1>Biddr</h1>
+  <% if notice %>
+    <div class = "alert alert-success"><%= notice %></div>
+  <% elsif alert %>
+    <div class = "alert alert-danger"><%= alert %></div>
+  <% end %>
+
+
+  <h1><%= link_to "Biddr", auctions_path %></h1>
 
   <hr>
-    <%= link_to "Sign Up", new_user_path %> |
-    <%= link_to "All Auctions", auctions_path %> |
-    <%= link_to "New Auction", new_auction_path %>
+
+    <div class="nav">
+      <% if user_signed_in? %>
+        Hello, <%= current_user.first_name %> |
+        <%= link_to "New Auction", new_auction_path %> |
+        <%= link_to "Log Out", sessions_path, method: :delete %>
+      <% else %>
+        <%= link_to "Sign Up", new_user_path %> |
+        <%= link_to "Log In", new_session_path %>
+      <% end %>
+    </div>
+
   <hr>
 
   <div class="container">
+
+
     <%= yield %>
   </div>
 

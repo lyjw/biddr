@@ -17,4 +17,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def show
+    if !user_signed_in?
+      flash[:alert] = "You must be logged in to view other users' bids"
+      redirect_to new_user_path
+    else
+      @user = User.find params["id"]
+    end
+  end
+
 end

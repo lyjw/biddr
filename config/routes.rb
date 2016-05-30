@@ -6,6 +6,10 @@ Rails.application.routes.draw do
     resources :bids, only: [:create]
   end
 
+  resources :sessions, only: [:new, :create] do
+      delete :destroy, on: :collection
+  end
+
   resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -7,4 +7,8 @@ class Bid < ActiveRecord::Base
   def bidder
     user ? User.find(user_id).full_name : "Anonymous"
   end
+
+  def for_auction
+    Auction.find(auction_id).title
+  end
 end

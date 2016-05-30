@@ -1,0 +1,18 @@
+<h3>Bids placed by <%= @user.full_name %></h3>
+
+<table class="table">
+  <thead>
+    <th>#</th>
+    <th>Auction</th>
+    <th>Bid</th>
+  </thead>
+  <tbody>
+      <% @user.bids.each_with_index do |bid, i| %>
+      <tr>
+        <th scope="row"><%= i + 1 %></th>
+        <td><%= bid.for_auction %></td>
+        <td><%= number_to_currency(bid.bid_price) %></td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>
