@@ -30,7 +30,7 @@
 
 <% if @ordered_bids.length > 0 %>
   <% @ordered_bids.each do |bid| %>
-    <%= number_to_currency(bid.bid_price) %> on <%= formatted_date(bid.created_at) %>
+    <%= number_to_currency(bid.bid_price) %> on <%= formatted_date(bid.created_at) %> by <%= bid.bidder ? bid.bidder : "Anonymous" %>
     <hr>
   <% end %>
 <% else %>
