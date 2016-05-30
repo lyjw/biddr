@@ -5,6 +5,8 @@ class Auction < ActiveRecord::Base
   validates :title, presence: true, uniqueness: true
   validates :reserve_price, presence: true
 
+  after_initialize :set_current_price_to_zero
+
   include AASM
 
   aasm whiny_transitions: false do
@@ -34,5 +36,13 @@ class Auction < ActiveRecord::Base
     event :unpublish do
       transitions from: :published, to: :draft
     end
+  end
+
+  def update_current_price
+    bids.order("bid_price DESC").first.bid_price
+  end
+
+  def set_current_price_to_zero
+    current_price = 0
   end
 end
