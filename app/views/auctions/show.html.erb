@@ -3,14 +3,27 @@
   <p><%= @auction.details %></p>
 
   <hr>
-
   Current Price: <%= @auction.reserve_price %>
+
+  <hr>
+  Status: <%= @auction.published? ? "Ongoing" : "Draft" %>
+
+  <% if can? :publish, @auction %>
+    <% if @auction.draft? %>
+      <%= link_to auction_publish_path(@auction), method: :post do %>
+        <button type="button" name="button" class="btn btn-success">Publish</button>
+      <% end %>
+    <% else %>
+      <%= link_to auction_unpublish_path(@auction), method: :post do %>
+        <button type="button" name="button" class="btn btn-danger">Unpublish</button>
+      <% end %>
+    <% end %>
+  <% end %>
 
 </div>
 
-<%= simple_form_for [@auction, @bid] do |f| %>
-  <%= f.input :bid_price, label: false, input_html: { class: 'bid-form' } %>
-  <%= f.submit class: "btn btn-default", id: 'bid-submit' %>
+<% if can? :bid, @auction %>
+  <%= render 'bid_form' %>
 <% end %>
 
 <h4>Previous Bids</h4>

@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
 
   resources :auctions do
+    post '/publish' => 'auctions#publish'
+    post '/unpublish' => 'auctions#unpublish'
     resources :bids, only: [:create]
   end
+
+  resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

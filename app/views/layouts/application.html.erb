@@ -11,6 +11,10 @@
   <h1>Biddr</h1>
 
   <hr>
+    <%= link_to "Sign Up", new_user_path %> |
+    <%= link_to "All Auctions", auctions_path %> |
+    <%= link_to "New Auction", new_auction_path %>
+  <hr>
 
   <div class="container">
     <%= yield %>
